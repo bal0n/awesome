@@ -20,6 +20,4 @@ Configuración del tema
 	mkdir .config/themes
 	cp /usr/share/awesome/themes* .config/awesome/themes
 	
-Awesome WM (Español) en la Arch Wiki
-
-https://wiki.archlinux.org/index.php/Awesome_(Espa%C3%B1ol)
+Awesome WM (Español) en la Arch Wiki: https://wiki.archlinux.org/index.php/Awesome_(Espa%C3%B1ol)
