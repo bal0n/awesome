@@ -1,5 +1,5 @@
 Guión de instalación de Awesome WM usando scripts
-===========
+=========
 
 	En formación...
 
