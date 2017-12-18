@@ -1,8 +1,11 @@
-# Guión de instalación de Awesome WM usando scripts
+Guión de instalación de Awesome WM usando scripts
+===========
 
 	En formación...
 
-# Guión manual de instalación
+Guión manual de instalación
+===========
+
 Instalación base de Awesome WM
 
   	mkdir -p ~/.config/awesome/
@@ -19,4 +22,4 @@ Configuración del tema
 	
 Awesome WM (Español) en la Arch Wiki
 
-	https://wiki.archlinux.org/index.php/Awesome_(Espa%C3%B1ol)
+https://wiki.archlinux.org/index.php/Awesome_(Espa%C3%B1ol)
