@@ -9,6 +9,13 @@ local menubar 		= 	require("menubar")
 local hotkeys_popup 	= 	require("awful.hotkeys_popup").widget
 				require("awful.hotkeys_popup.keys")
 
+-- Librerías personales
+local bateria = require("widgets.bateria")
+local brillo = require("widgets.brillo")
+local cpu = require("widgets.cpu")
+local ram = require("widgets.ram")
+local volumen = require("widgets.volumen")
+
 -- Errores
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -30,7 +37,7 @@ do
 end
 
 -- Autorun (mediante script)
-awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh")
 
 -- Variables
 beautiful.init("~/.config/awesome/tm.lua")
@@ -113,7 +120,7 @@ local taglist_buttons = gears.table.join(
                                                   client.focus:toggle_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+             	    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
                     awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
                 )
 
@@ -195,10 +202,15 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+	    	ram,
+		cpu,
+		brillo,
+		volumen,
+		bateria,
+	    mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
-            s.mylayoutbox,
+	    s.mylayoutbox,
         },
     }
 end)
