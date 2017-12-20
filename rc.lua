@@ -196,21 +196,22 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
+	    s.mylayoutbox,
             s.mytaglist,
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-	    	ram,
-		cpu,
-		brillo,
-		volumen,
+--	    	ram,
+--		cpu,
+--		brillo,
+--		volumen,
 		bateria,
-	    mykeyboardlayout,
+--	    mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
-	    s.mylayoutbox,
+--	    s.mylayoutbox,
         },
     }
 end)
