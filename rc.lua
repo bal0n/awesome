@@ -1,13 +1,13 @@
 -- Librerías estándar
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
-local wibox = require("wibox")
-local beautiful = require("beautiful")
-local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup").widget
-require("awful.hotkeys_popup.keys")
+local gears     =   require("gears")
+local awful     =   require("awful")
+        require("awful.autofocus")
+local wibox     =   require("wibox")
+local beautiful   =   require("beautiful")
+local naughty     =   require("naughty")
+local menubar     =   require("menubar")
+local hotkeys_popup   =   require("awful.hotkeys_popup").widget
+        require("awful.hotkeys_popup.keys")
 
 -- Librerías personales
 local bateria = require("widgets.bateria")
@@ -36,8 +36,8 @@ end
 awful.spawn.with_shell("scripts/autorun.sh")
 
 -- Variables
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-terminal = "xterm"
+beautiful.init("~/.config/awesome/tm.lua")
+terminal = "termite"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
