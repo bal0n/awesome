@@ -14,8 +14,8 @@ local theme = {}
 theme.font          = "sans 8"
 
 -- VENTANAS
-theme.bg_normal     = "#222222" 
-theme.bg_focus      = "#222222" 
+theme.bg_normal     = "#151515" 
+theme.bg_focus      = "#151515" 
 theme.bg_urgent     = "#9e0000" 
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
