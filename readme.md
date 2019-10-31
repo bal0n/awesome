@@ -1,3 +1,5 @@
+![image_awesome](src/awesome-logo.svg)
+
 Guión de instalación de Awesome WM usando scripts
 =========
 
