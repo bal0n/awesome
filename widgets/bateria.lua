@@ -35,6 +35,7 @@ local notification
 local function show_battery_status()
     awful.spawn.easy_async([[bash -c 'acpi']],
         function(stdout, _, _, _)
+            naughty.destroy(notification)
             notification = naughty.notify{
                 text =  stdout,
                 title = "Battery status",
@@ -67,14 +68,49 @@ local function show_battery_warning()
     }
 end
 
-watch("acpi", 10,
+local last_battery_check = os.time()
+
+watch("acpi -i", 10,
     function(widget, stdout, stderr, exitreason, exitcode)
         local batteryType
-        local _, status, charge_str, time = string.match(stdout, '(.+): (%a+), (%d?%d%d)%%,? ?.*')
-        local charge = tonumber(charge_str)
+
+        local battery_info = {}
+        local capacities = {}
+        for s in stdout:gmatch("[^\r\n]+") do
+            local status, charge_str, time = string.match(s, '.+: (%a+), (%d?%d?%d)%%,?.*')
+            if string.match(s, 'rate information') then
+                -- ignore such line
+            elseif status ~= nil then
+                table.insert(battery_info, {status = status, charge = tonumber(charge_str)})
+            else
+                local cap_str = string.match(s, '.+:.+last full capacity (%d+)')
+                table.insert(capacities, tonumber(cap_str))
+            end
+        end
+
+        local capacity = 0
+        for i, cap in ipairs(capacities) do
+            capacity = capacity + cap
+        end
+
+        local charge = 0
+        local status
+        for i, batt in ipairs(battery_info) do
+            if batt.charge >= charge then
+                status = batt.status -- use most charged battery status
+                -- this is arbitrary, and maybe another metric should be used
+            end
+
+            charge = charge + batt.charge * capacities[i]
+        end
+        charge = charge / capacity
+
         if (charge >= 0 and charge < 15) then
             batteryType = "battery-empty%s-symbolic"
-            if status ~= 'Charging' then
+            if status ~= 'Charging' and os.difftime(os.time(), last_battery_check) > 300 then
+                -- if 5 minutes have elapsed since the last warning
+                last_battery_check = os.time()
+
                 show_battery_warning()
             end
         elseif (charge >= 15 and charge < 40) then batteryType = "battery-caution%s-symbolic"
@@ -82,11 +118,13 @@ watch("acpi", 10,
         elseif (charge >= 60 and charge < 80) then batteryType = "battery-good%s-symbolic"
         elseif (charge >= 80 and charge <= 100) then batteryType = "battery-full%s-symbolic"
         end
+
         if status == 'Charging' then
             batteryType = string.format(batteryType, '-charging')
         else
             batteryType = string.format(batteryType, '')
         end
+
         widget.icon:set_image(PATH_TO_ICONS .. batteryType .. ".svg")
 
         -- Update popup text
