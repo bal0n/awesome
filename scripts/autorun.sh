@@ -13,5 +13,4 @@ run xbindkeys
 run unclutter
 run numlockx
 run urxvtd -q
-run conky
 run xrdb -merge ~/.Xresources

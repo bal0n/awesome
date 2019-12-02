@@ -21,7 +21,7 @@ theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
 -- COLOR DE FUENTES
-theme.fg_normal     = "#555555"
+theme.fg_normal     = "#ffffff"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
@@ -33,14 +33,31 @@ theme.border_normal = "#222222"
 theme.border_focus  = "#222222"
 theme.border_marked = "#222222"
 
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
+-- TAGLIST
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
+theme.taglist_bg_focus = "#555555";
+theme.taglist_fg_focus = "#ffffff";
+theme.taglist_bg_urgent = "#ff0000";
+theme.taglist_fg_urgent = "#ffffff";
+theme.taglist_bg_occupied = "#151515";
+theme.taglist_fg_occupied = "#ffffff";
+theme.taglist_bg_empty = "#151515";
+theme.taglist_fg_empty = "#555555";
+
 -- tasklist_[bg|fg]_[focus|urgent]
+
 -- titlebar_[bg|fg]_[normal|focus]
+theme.titlebar_bg_focus = "#151515";
+theme.titlebar_fg_focus = "#ffffff";
+
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]
+theme.mouse_finder_color = "#ff0000";
+theme.mouse_finder_timeout = "#ff0000";
+theme.mouse_finder_animate_timeout = "#ff0000";
+theme.mouse_finder_radius = "#ff0000";
+theme.mouse_finder_factor = "#ff0000";
+
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
