@@ -138,6 +138,7 @@ theme.widget_battery_low                        = theme.dir .. "/icons/widgets/b
 theme.widget_battery_empty                      = theme.dir .. "/icons/widgets/battery_empty.png"
 theme.widget_battery_no                         = theme.dir .. "/icons/widgets/battery_no.png"
 
+theme.widget_mem                                = theme.dir .. "/icons/widgets/mem.png"
 theme.widget_cpu                                = theme.dir .. "/icons/widgets/cpu.png"
 theme.widget_temp                               = theme.dir .. "/icons/widgets/temp.png"
 theme.widget_net                                = theme.dir .. "/icons/widgets/net.png"
@@ -206,22 +207,40 @@ theme.violet         = "#8c8ccd"
 theme.pink           = "#B85C8A"
 theme.black          = theme.bg_normal
 
--- Widgets
-local clock_icon = wibox.widget.imagebox(theme.widget_clock)
-local clock = awful.widget.textclock("<span font=\"Meslo LGS Regular 10\" color=\"#32302f\"> %a %d %b  %H:%M </span>")
-local clock_widget = wibox.container.background(wibox.container.margin(wibox.widget {clock_icon, clock, layout = wibox.layout.align.horizontal }, 0, 1), theme.violet)
+theme.w1 = theme.dir .. "/icons/display/1.png"
+theme.w2 = theme.dir .. "/icons/display/2.png"
+theme.w3 = theme.dir .. "/icons/display/3.png"
+theme.w4 = theme.dir .. "/icons/display/4.png"
+theme.w5 = theme.dir .. "/icons/display/5.png"
+theme.w6 = theme.dir .. "/icons/display/6.png"
+theme.w7 = theme.dir .. "/icons/display/7.png"
+theme.w8 = theme.dir .. "/icons/display/8.png"
+theme.w9 = theme.dir .. "/icons/display/9.png"
+theme.w10 = theme.dir .. "/icons/display/10.png"
+theme.w11 = theme.dir .. "/icons/display/11.png"
+theme.w12 = theme.dir .. "/icons/display/12.png"
+theme.w13 = theme.dir .. "/icons/display/13.png"
+theme.w14 = theme.dir .. "/icons/display/14.png"
+theme.w15 = theme.dir .. "/icons/display/15.png"
+theme.w16 = theme.dir .. "/icons/display/16.png"
+theme.w17 = theme.dir .. "/icons/display/17.png"
 
--- Calendar
-local calendar = lain.widget.calendar({
-    cal = "cal --color=always",
-    attach_to = { clock_widget },
-    notification_preset = {
-        font = "Meslo LGS Regular 10",
-        fg   = theme.fg_normal,
-        bg   = theme.bg_normal
-    }
-})
-
-
+w1 = wibox.widget.imagebox(theme.w1)
+w2 = wibox.widget.imagebox(theme.w2)
+w3 = wibox.widget.imagebox(theme.w3)
+w4 = wibox.widget.imagebox(theme.w4)
+w5 = wibox.widget.imagebox(theme.w5)
+w6 = wibox.widget.imagebox(theme.w6)
+w7 = wibox.widget.imagebox(theme.w7)
+w8 = wibox.widget.imagebox(theme.w8)
+w9 = wibox.widget.imagebox(theme.w9)
+w10 = wibox.widget.imagebox(theme.w10)
+w11 = wibox.widget.imagebox(theme.w11)
+w12 = wibox.widget.imagebox(theme.w12)
+w13 = wibox.widget.imagebox(theme.w13)
+w14 = wibox.widget.imagebox(theme.w14)
+w15 = wibox.widget.imagebox(theme.w15)
+w16 = wibox.widget.imagebox(theme.w16)
+w17 = wibox.widget.imagebox(theme.w17)
 
 return theme

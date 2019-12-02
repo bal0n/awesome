@@ -165,6 +165,190 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+w1 = wibox.widget.imagebox(beautiful.w1)
+w2 = wibox.widget.imagebox(beautiful.w2)
+w3 = wibox.widget.imagebox(beautiful.w3)
+w4 = wibox.widget.imagebox(beautiful.w4)
+w5 = wibox.widget.imagebox(beautiful.w5)
+w6 = wibox.widget.imagebox(beautiful.w6)
+w7 = wibox.widget.imagebox(beautiful.w7)
+w8 = wibox.widget.imagebox(beautiful.w8)
+w9 = wibox.widget.imagebox(beautiful.w9)
+w10 = wibox.widget.imagebox(beautiful.w10)
+w11 = wibox.widget.imagebox(beautiful.w11)
+w12 = wibox.widget.imagebox(beautiful.w12)
+w13 = wibox.widget.imagebox(beautiful.w13)
+w14 = wibox.widget.imagebox(beautiful.w14)
+w15 = wibox.widget.imagebox(beautiful.w15)
+w16 = wibox.widget.imagebox(beautiful.w16)
+w17 = wibox.widget.imagebox(beautiful.w17)
+
+
+-- Widgets
+local clock_icon = wibox.widget.imagebox(beautiful.widget_clock)
+local clock = awful.widget.textclock("<span font=\"Meslo LGS Regular 10\" color=\"#32302f\"> %a %d %b  %H:%M </span>")
+local clock_widget = wibox.container.background(wibox.container.margin(wibox.widget {clock_icon, clock, layout = wibox.layout.align.horizontal }, 0, 1), beautiful.violet)
+
+-- Calendar
+local calendar = lain.widget.calendar({
+    cal = "cal --color=always",
+    attach_to = { clock_widget },
+    notification_preset = {
+        font = "Meslo LGS Regular 10",
+        fg   = beautiful.fg_normal,
+        bg   = beautiful.bg_normal
+    }
+})
+local markup = lain.util.markup
+-- Battery
+local bat_icon = wibox.widget.imagebox(beautiful.widget_battery)
+local batspr_l = wibox.widget.imagebox(beautiful.w8)
+local batspr_r = wibox.widget.imagebox(beautiful.w9)
+local bat = lain.widget.bat({
+    battery = "BAT0",
+    timeout = 1,
+    notify = "on",
+    n_perc = {5,15},
+    settings = function()
+        bat_notification_low_preset = {
+            title = "Battery low",
+            text = "Plug the cable!",
+            timeout = 15,
+            fg = "#232323",
+            bg = "#f18e38"
+        }
+        bat_notification_critical_preset = {
+            title = "Battery exhausted",
+            text = "Shutdown imminent",
+            timeout = 15,
+            fg = "#232323",
+            bg = "#c92132"
+        }
+
+        if bat_now.status ~= "N/A" then
+            if bat_now.status == "Charging" then
+                bat_icon:set_image(beautiful.widget_ac)
+                batspr_l:set_image(beautiful.w12)
+                batspr_r:set_image(beautiful.w10)
+                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget," +" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+            elseif bat_now.status == "Full" then
+                bat_icon:set_image(beautiful.widget_ac)
+                batspr_l:set_image(beautiful.w8)
+                batspr_r:set_image(beautiful.w9)
+                widget:set_markup(markup.font(beautiful.font, markup.fg.color("#232323", " ~" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]")))
+            elseif tonumber(bat_now.perc) <= 35 then
+                bat_icon:set_image(beautiful.widget_battery_empty)
+                batspr_l:set_image(beautiful.w13)
+                batspr_r:set_image(beautiful.w11)
+                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))     
+            elseif tonumber(bat_now.perc) <= 70 then
+                bat_icon:set_image(beautiful.widget_battery_medium)
+                batspr_l:set_image(beautiful.w16)
+                batspr_r:set_image(beautiful.w14)
+                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.yellow, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+            elseif tonumber(bat_now.perc) <= 90 then
+                bat_icon:set_image(beautiful.widget_battery)
+                batspr_l:set_image(beautiful.w17)
+                batspr_r:set_image(beautiful.w15)
+                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.green, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+            else
+                bat_icon:set_image(beautiful.widget_battery)
+                batspr_l:set_image(beautiful.w12)
+                batspr_r:set_image(beautiful.w10)
+                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+            end
+        else
+            widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " AC "))))
+            bat_icon:set_image(beautiful.widget_battery_no)
+            batspr_l:set_image(beautiful.w13)
+            batspr_r:set_image(beautiful.w11)
+        end
+    end
+})
+
+-- Battery
+local batbar = wibox.widget {
+    forced_height    = 1,
+    forced_width     = 45,
+    color            = "#232323",
+    background_color = "#232323",
+    margins          = 1,
+    paddings         = 1,
+    ticks            = true,
+    ticks_size       = 5,
+    widget           = wibox.widget.progressbar,
+}
+
+local batupd = lain.widget.bat({
+    battery = "BAT0",
+    timeout = 1,
+    settings = function()
+        if bat_now.status ~= "N/A" then
+            if bat_now.status == "Charging" then
+                batbar:set_color(beautiful.blue)
+            elseif bat_now.status == "Full" then
+                batbar:set_color(beautiful.gray)
+            elseif tonumber(bat_now.perc) <= 35 then
+                batbar:set_color(beautiful.red)
+            elseif tonumber(bat_now.perc) <= 70 then
+                batbar:set_color(beautiful.yellow)
+            elseif tonumber(bat_now.perc) <= 90 then
+                batbar:set_color(beautiful.green)
+            else
+                batbar:set_color(beautiful.blue)
+            end
+            batbar:set_value(bat_now.perc / 100)
+        else
+            return
+        end
+    end
+})
+local batbg = wibox.container.background(batbar, "#474747", gears.shape.rectangle)
+local bat_widget = wibox.container.margin(batbg, 2, 7, 4, 4)
+
+local battery_widget1 = wibox.container.background(wibox.container.margin(wibox.widget { bat_icon, bat_widget,  layout = wibox.layout.align.horizontal }, 1, 1), beautiful.gray)
+local battery_widget2 = wibox.container.background(wibox.container.margin(wibox.widget { batspr_l, bat.widget, batspr_r, layout = wibox.layout.align.horizontal }, 0, 0), beautiful.gray)
+
+-- MEM
+local mem_icon = wibox.widget.imagebox(beautiful.widget_mem)
+local mem = lain.widget.mem({
+    settings = function()
+        widget:set_markup(markup.font(beautiful.font, markup.fg.color(beautiful.fg_widget, " " .. mem_now.used .. "MB [" .. mem_now.perc .. "%]")))
+    end
+})
+local mem_widget =  wibox.container.background(wibox.container.margin(wibox.widget { mem_icon, mem.widget, layout = wibox.layout.align.horizontal }, 0, 0), beautiful.pink)
+
+
+-- CPU
+local cpu_icon = wibox.widget.imagebox(beautiful.widget_cpu)
+local cpu = lain.widget.cpu({
+    settings = function()
+        widget:set_markup(markup.font(beautiful.font, markup.fg.color(beautiful.fg_widget, " " .. cpu_now.usage .. "% ")))
+    end
+})
+local cpu_widget =  wibox.container.background(wibox.container.margin(wibox.widget { cpu_icon, cpu.widget, layout = wibox.layout.align.horizontal }, 0, 0), beautiful.blue)
+
+
+-- Coretemp (lain, average)
+local temp_icon = wibox.widget.imagebox(beautiful.widget_temp)
+local temp = lain.widget.temp({
+    settings = function()
+        widget:set_markup(markup.font(beautiful.font, markup.fg.color(beautiful.fg_widget, " " .. coretemp_now .. "° ")))
+    end
+})
+local temp_widget =  wibox.container.background(wibox.container.margin(wibox.widget { temp_icon, temp.widget, layout = wibox.layout.align.horizontal }, 0, 0), beautiful.red)
+
+-- FS
+local fs_icon = wibox.widget.imagebox(beautiful.widget_hdd)
+local fs = lain.widget.fs({
+    notification_preset = { fg = beautiful.fg_normal, bg = beautiful.bg_normal, font = beautiful.fs_font },
+    settings = function()
+        local fsp = string.format(" %3.2f %s ", fs_now["/home"].free, fs_now["/home"].units)
+        widget:set_markup(markup.font(beautiful.font, markup.fg.color(beautiful.fg_widget, fsp)))
+    end
+})
+local fs_widget =  wibox.container.background(wibox.container.margin(wibox.widget { fs_icon, fs.widget, layout = wibox.layout.align.horizontal }, 0, 0), beautiful.yellow)
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -203,14 +387,19 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
---          ram,
---          cpu,
---          brillo,
---          volumen,
-            bateria,
---          mykeyboardlayout,
             wibox.widget.systray(),
-            mytextclock,
+            w3,
+            fs_widget,
+            w4,
+            temp_widget,
+            w5,
+            cpu_widget,
+            w6,
+            mem_widget,
+            w7,
+            battery_widget1,
+            battery_widget2,
+            clock_widget,
             s.mylayoutbox,
         },
     }
