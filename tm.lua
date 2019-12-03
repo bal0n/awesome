@@ -19,6 +19,7 @@ local theme = {}
 theme.dir           = os.getenv("HOME") .. "/.config/awesome/themes/darkblue"
 theme.wallpaper     = theme.dir .. "/wallpapers/wall_0.png"
 theme.font          = "sans 8"
+theme.fontBat       = "Meslo LGS Regular 12"
 --theme.wallpaper = "~/.config/awesome/src/aestetica3.jpg"
 
 

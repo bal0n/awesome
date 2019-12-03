@@ -186,7 +186,7 @@ w17 = wibox.widget.imagebox(beautiful.w17)
 
 -- Widgets
 local clock_icon = wibox.widget.imagebox(beautiful.widget_clock)
-local clock = awful.widget.textclock("<span font=\"Meslo LGS Regular 10\" color=\"#32302f\"> %a %d %b  %H:%M </span>")
+local clock = awful.widget.textclock("<span font=\"Meslo LGS Regular 10\" color=\"#32302f\"> %d/%m/%y  %H:%M </span>")
 local clock_widget = wibox.container.background(wibox.container.margin(wibox.widget {clock_icon, clock, layout = wibox.layout.align.horizontal }, 0, 1), beautiful.violet)
 
 -- Calendar
@@ -258,7 +258,7 @@ local bat = lain.widget.bat({
                 widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
             end
         else
-            widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " AC "))))
+            widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " AC "))))
             bat_icon:set_image(beautiful.widget_battery_no)
             batspr_l:set_image(beautiful.w13)
             batspr_r:set_image(beautiful.w11)
@@ -388,6 +388,8 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+            w1,
+            w2,
             w3,
             fs_widget,
             w4,
