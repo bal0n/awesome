@@ -1,29 +1,24 @@
--- Librerías estándar
-local gears     =   require("gears")
-local awful     =   require("awful")
-        require("awful.autofocus")
-local wibox     =   require("wibox")
-local beautiful   =   require("beautiful")
-local naughty     =   require("naughty")
-local menubar     =   require("menubar")
-local hotkeys_popup   =   require("awful.hotkeys_popup").widget
-        require("awful.hotkeys_popup.keys")
+local gears         =   require("gears")
+local awful         =   require("awful")
+                        require("awful.autofocus")
+local wibox         =   require("wibox")
+local beautiful     =   require("beautiful")
+local naughty       =   require("naughty")
+local menubar       =   require("menubar")
+local hotkeys_popup =   require("awful.hotkeys_popup").widget
+                        require("awful.hotkeys_popup.keys")
+local lain          =   require("lain")
 
--- Librerías personales
-local bateria = require("widgets.bateria")
-local brillo = require("widgets.brillo")
-local cpu = require("widgets.cpu")
-local ram = require("widgets.ram")
-local volumen = require("widgets.volumen")
-local lain = require("lain")
-
--- Errores
+-- Esta condición comprueba si ha habido errores al inicio y muestra mensaje en caso de haber.
+-- Si hubiera algún error se cargará la configuración del sistema en lugar de la del usuario.
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
                      text = awesome.startup_errors })
 end
 
+-- Al igual que en el caso anterior, se comprueban diferentes errores con el fin de controlarlos
+-- y mostrar una notificación informativa.
 do
     local in_error = false
     awesome.connect_signal("debug::error", function (err)
@@ -37,17 +32,30 @@ do
     end)
 end
 
--- Autorun (mediante script)
-awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh")
+-- Helper functions
+local function client_menu_toggle_fn()
+    local instance = nil
 
--- Variables
+    return function ()
+        if instance and instance.wibox.visible then
+            instance:hide()
+            instance = nil
+        else
+            instance = awful.menu.clients({ theme = { width = 250 } })
+        end
+    end
+end
+
+-- Variables locales
+awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh") -- Autorun mediante script
 beautiful.init("~/.config/awesome/tm.lua")
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
--- Layouts
+-- Clase de definición de layouts, gestionando el orden y los layouts que forman
+-- parte del entorno. Se puede reordenar, añadir o eliminar layouts a gusto.
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.fair,
@@ -66,21 +74,6 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
 }
-
-
--- Helper functions
-local function client_menu_toggle_fn()
-    local instance = nil
-
-    return function ()
-        if instance and instance.wibox.visible then
-            instance:hide()
-            instance = nil
-        else
-            instance = awful.menu.clients({ theme = { width = 250 } })
-        end
-    end
-end
 
 -- Menu
 myawesomemenu = {
@@ -102,10 +95,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 -- Menubar configuration
 menubar.utils.terminal = terminal 
 mykeyboardlayout = awful.widget.keyboardlayout()
-
--- Wibar
----- Widget de reloj
-mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -380,11 +369,11 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            --mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        nil, --s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
@@ -733,5 +722,5 @@ client.connect_signal("mouse::enter", function(c)
     end
 end)
 
---client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
---client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
