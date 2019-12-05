@@ -219,32 +219,32 @@ local bat = lain.widget.bat({
                 bat_icon:set_image(beautiful.widget_ac)
                 batspr_l:set_image(beautiful.w12)
                 batspr_r:set_image(beautiful.w10)
-                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget," +" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+                widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget," +" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
             elseif bat_now.status == "Full" then
                 bat_icon:set_image(beautiful.widget_ac)
                 batspr_l:set_image(beautiful.w8)
                 batspr_r:set_image(beautiful.w9)
-                widget:set_markup(markup.font(beautiful.font, markup.fg.color("#232323", " ~" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]")))
+                widget:set_markup(markup.font(beautiful.fontBat, markup.fg.color("#232323", " ~" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]")))
             elseif tonumber(bat_now.perc) <= 35 then
                 bat_icon:set_image(beautiful.widget_battery_empty)
                 batspr_l:set_image(beautiful.w13)
                 batspr_r:set_image(beautiful.w11)
-                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))     
+                widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))     
             elseif tonumber(bat_now.perc) <= 70 then
                 bat_icon:set_image(beautiful.widget_battery_medium)
                 batspr_l:set_image(beautiful.w16)
                 batspr_r:set_image(beautiful.w14)
-                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.yellow, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+                widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.yellow, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
             elseif tonumber(bat_now.perc) <= 90 then
                 bat_icon:set_image(beautiful.widget_battery)
                 batspr_l:set_image(beautiful.w17)
                 batspr_r:set_image(beautiful.w15)
-                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.green, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+                widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.green, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
             else
                 bat_icon:set_image(beautiful.widget_battery)
                 batspr_l:set_image(beautiful.w12)
                 batspr_r:set_image(beautiful.w10)
-                widget:set_markup(markup.font(beautiful.font, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
+                widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.blue, markup.fg.color(beautiful.fg_widget, " -" .. bat_now.perc .. "% [" .. bat_now.watt .. "W][" .. bat_now.time .. "]"))))
             end
         else
             widget:set_markup(markup.font(beautiful.fontBat, markup.bg.color(beautiful.red, markup.fg.color(beautiful.fg_widget, " AC "))))
