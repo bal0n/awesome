@@ -43,7 +43,7 @@ do
 end
 -- }}}
 
--- Variable definitions
+-- Variables locales
 awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh") -- Autorun mediante script
 beautiful.init("~/.config/awesome/tema/tm.lua")
 terminal = "urxvtc"
@@ -51,15 +51,16 @@ editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
--- Table of layouts to cover with awful.layout.inc, order matters.
+-- Clase de definición de layouts, gestionando el orden y los layouts que forman
+-- parte del entorno. Se puede reordenar, añadir o eliminar layouts a gusto.
 awful.layout.layouts = {
     awful.layout.suit.floating,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
