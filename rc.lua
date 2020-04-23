@@ -18,7 +18,6 @@ end
 do
     local in_error = false
     awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
         if in_error then return end
         in_error = true
 
@@ -128,9 +127,11 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
-    awful.tag({ "α", "β", "λ", "μ", "π", "Σ", "γ", "φ", "Ω" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
+    -- Prompt para ejecución de aplicaciones
     s.mypromptbox = awful.widget.prompt()
+    
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
                            awful.button({ }, 1, function () awful.layout.inc( 1) end),
@@ -155,19 +156,45 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            s.mytaglist,
-            s.mypromptbox,
+            s.mytaglist
         },
-        s.mytasklist, -- Middle widget
+        -- Middle widget
+        --s.mytasklist, 
+        s.mypromptbox,
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            require("battery-widget") {},
+            mytextclock,
+            --s.mylayoutbox,
+        },
+    }
+
+    -- Dock autoocultado
+    local timer = require("gears.timer")
+    local dock = awful.wibar({ position = "bottom", screen = s, width = 50, stretch = true, visible = false })
+    dock:setup {
+        layout = wibox.layout.align.horizontal,
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.mytasklist, 
+        },
+        -- Middle widget
+        --s.mytasklist, 
+        s.mypromptbox,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
-            require("battery-widget") {},
-            mytextclock,
             s.mylayoutbox,
         },
     }
+    local dock_trigger = wibox({ bg = "#00000000", opacity = 0, ontop = true, visible = true })
+    local dock_hide_timer = timer({ timeout = 0.1})
+    dock_trigger:geometry({ width = s.workarea.width, height = 50 })
+    dock_hide_timer:connect_signal("timeout", function() dock.visible = false; dock_hide_timer:stop() end )
+    dock_trigger:connect_signal("mouse::enter", function() dock.visible = true end)
+    dock:connect_signal("mouse::enter", function() if dock_hide_timer.started then dock_hide_timer:stop() end end)
+    dock:connect_signal("mouse::leave", function() dock_hide_timer:again() end)
 end)
 
 root.buttons(gears.table.join(
