@@ -174,23 +174,21 @@ awful.screen.connect_for_each_screen(function(s)
     local dock = awful.wibar({ position = "bottom", screen = s, width = 50, stretch = true, visible = false })
     dock:setup {
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
+        { 
             layout = wibox.layout.fixed.horizontal,
             s.mytasklist, 
         },
-        -- Middle widget
-        --s.mytasklist, 
         s.mypromptbox,
-        { -- Right widgets
+        {
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
             wibox.widget.systray(),
             s.mylayoutbox,
         },
     }
-    local dock_trigger = wibox({ bg = "#00000000", opacity = 0, ontop = true, visible = true })
-    local dock_hide_timer = timer({ timeout = 0.1})
-    dock_trigger:geometry({ width = s.workarea.width, height = 50 })
+    local dock_trigger = wibox({ bg = "#00000000", opacity = 0, ontop = false, visible = true })
+    local dock_hide_timer = timer({ timeout = 1})
+    dock_trigger:geometry({ width = s.workarea.width, height = 1 })
     dock_hide_timer:connect_signal("timeout", function() dock.visible = false; dock_hide_timer:stop() end )
     dock_trigger:connect_signal("mouse::enter", function() dock.visible = true end)
     dock:connect_signal("mouse::enter", function() if dock_hide_timer.started then dock_hide_timer:stop() end end)
