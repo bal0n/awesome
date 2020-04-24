@@ -72,7 +72,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 menubar.utils.terminal = terminal
 mykeyboardlayout = awful.widget.keyboardlayout()
-mytextclock = wibox.widget.textclock()
+mytextclock = awful.widget.textclock("  %H:%M  ", 15)
 
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -156,43 +156,18 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            s.mytaglist
+            s.mytaglist,
+            s.mytasklist, 
         },
         -- Middle widget
-        --s.mytasklist, 
         s.mypromptbox,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            require("battery-widget") {},
-            mytextclock,
-            --s.mylayoutbox,
-        },
-    }
-
-    -- Dock autoocultado
-    local timer = require("gears.timer")
-    local dock = awful.wibar({ position = "bottom", screen = s, width = 50, stretch = true, visible = false })
-    dock:setup {
-        layout = wibox.layout.align.horizontal,
-        { 
-            layout = wibox.layout.fixed.horizontal,
-            s.mytasklist, 
-        },
-        s.mypromptbox,
-        {
-            layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
             s.mylayoutbox,
+            mytextclock,
         },
     }
-    local dock_trigger = wibox({ bg = "#00000000", opacity = 0, ontop = false, visible = true })
-    local dock_hide_timer = timer({ timeout = 1})
-    dock_trigger:geometry({ width = s.workarea.width, height = 1 })
-    dock_hide_timer:connect_signal("timeout", function() dock.visible = false; dock_hide_timer:stop() end )
-    dock_trigger:connect_signal("mouse::enter", function() dock.visible = true end)
-    dock:connect_signal("mouse::enter", function() if dock_hide_timer.started then dock_hide_timer:stop() end end)
-    dock:connect_signal("mouse::leave", function() dock_hide_timer:again() end)
 end)
 
 root.buttons(gears.table.join(

@@ -12,5 +12,6 @@ run compton
 run xbindkeys
 run unclutter
 run numlockx
+run mate-power-manager
 run urxvtd -q
 run xrdb -merge ~/.Xresources
