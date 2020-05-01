@@ -420,6 +420,7 @@ awful.rules.rules = {
 }
 
 client.connect_signal("manage", function (c)
+    c.size_hints_honor = false
     if awesome.startup
       and not c.size_hints.user_position
       and not c.size_hints.program_position then
