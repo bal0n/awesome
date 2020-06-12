@@ -29,7 +29,7 @@ do
 end
 
 awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh") 
-beautiful.init("~/.config/awesome/tema/tm.lua")
+beautiful.init("~/.config/awesome/tm.lua")
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor

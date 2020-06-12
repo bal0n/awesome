@@ -39,8 +39,7 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
 
-theme.wallpaper = "~/.config/awesome/tema/images/aestetica.jpg" --themes_path.."default/background.png"
-theme.menu_submenu_icon = themes_path.."default/submenu.png"
+theme.wallpaper = "~/.config/awesome/tema/wallpaper.jpg" --themes_path.."default/background.png"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
