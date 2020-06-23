@@ -8,7 +8,7 @@ function run {
 }
 
 # Programas a ejecutar.
-run compton                   # Compton para gestión de transparencias
+#run compton                   # Compton para gestión de transparencias
 run xbindkeys                 # Atajos de teclado con xbindkeys (config en .xbindkeysrc)
 run unclutter                 # Unclutter para ocultar el ratón
 run numlockx                  # Marca numlock (Bloq Num)
