@@ -31,7 +31,7 @@ end
 awful.spawn.with_shell("~/.config/awesome/scripts/autorun.sh") 
 beautiful.init("~/.config/awesome/tm.lua")
 terminal = "urxvtc"
-editor = os.getenv("EDITOR") or "nano"
+editor = os.getenv("EDITOR") or "emacs -nw"
 editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
